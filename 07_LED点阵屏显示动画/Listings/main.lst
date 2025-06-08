@@ -1,0 +1,58 @@
+C51 COMPILER V9.59.0.0   MAIN                                                              04/07/2025 10:22:11 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Delay.h"
+   3          #include "MatrixLED.h"
+   4          //在led点阵屏上显示流动画面
+   5          //动画数据
+   6          unsigned char code Animation[]={
+   7            0x3C,0x42,0xA9,0x85,0x85,0xA9,0x42,0x3C,
+   8            0x3C,0x42,0xA1,0x85,0x85,0xA1,0x42,0x3C,
+   9            0x3C,0x42,0xA5,0x89,0x89,0xA5,0x42,0x3C,
+  10          };
+  11          
+  12          void main()
+  13          {
+  14   1        unsigned char i,Offset=0,Count=0;
+  15   1        MatrixLED_Init();
+  16   1        while(1)
+  17   1        {
+  18   2          for(i=0;i<8;i++)  //循环8次，显示8列数据
+  19   2          {
+  20   3            MatrixLED_ShowColumn(i,Animation[i+Offset]);
+  21   3          }
+  22   2          Count++;      //计次延时
+  23   2          if(Count>15)
+  24   2          {
+  25   3            Count=0;
+  26   3            Offset+=8;    //偏移+8，切换下一帧画面
+  27   3            if(Offset>16)
+  28   3            {
+  29   4              Offset=0;
+  30   4            }
+  31   3          }
+  32   2        }
+  33   1      }
+  34          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     78    ----
+   CONSTANT SIZE    =     24    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
